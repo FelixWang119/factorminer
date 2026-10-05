@@ -265,7 +265,7 @@ def load_runtime_dataset(
     target_df = compute_targets(raw_df, target_specs)
     target_columns = [spec.column_name for spec in target_specs]
     merge_columns = ["datetime", "asset_id", *target_columns]
-    preprocess_config = PreprocessConfig()
+    preprocess_config = getattr(cfg, "preprocess", None) or PreprocessConfig()
     processed_df = preprocess(raw_df, preprocess_config)
     processed_df = processed_df.merge(
         target_df[merge_columns],
